@@ -10,30 +10,18 @@ public class Foo
         if (a < 3) {
             trace.add( new java.lang.Integer( 2 ) );
             System.out.println( "xxx" );
-            while (a < 1) {
-                trace.add( new java.lang.Integer( 3 ) );
-                System.out.println( "run while loop" );
-                if (a == 0) {
-                    trace.add( new java.lang.Integer( 4 ) );
-                    System.out.println( "a = 0" );
-                } else {
-                    trace.add( new java.lang.Integer( 5 ) );
-                    return;
-                }
-                a = 5;
-            }
         } else {
-            trace.add( new java.lang.Integer( 6 ) );
+            trace.add( new java.lang.Integer( 3 ) );
             if (a > 4) {
-                trace.add( new java.lang.Integer( 7 ) );
+                trace.add( new java.lang.Integer( 4 ) );
                 System.out.println( "yyy" );
             } else {
-                trace.add( new java.lang.Integer( 8 ) );
-                if (a > 7 || a < 6) {
-                    trace.add( new java.lang.Integer( 9 ) );
+                trace.add( new java.lang.Integer( 5 ) );
+                if (a == 3) {
+                    trace.add( new java.lang.Integer( 6 ) );
                     System.out.println( "zzz" );
                 } else {
-                    trace.add( new java.lang.Integer( 10 ) );
+                    trace.add( new java.lang.Integer( 7 ) );
                     System.out.println( "ttt" );
                 }
             }

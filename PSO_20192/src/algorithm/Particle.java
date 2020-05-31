@@ -1,10 +1,8 @@
 package algorithm;
 
-import sun.tools.java.ClassType;
-
 import java.util.*;
 
-public class Particle<T extends Comparable<T>> {
+public class Particle<T> {
     /**
      * data có thể coi là position của particle
      */
@@ -56,16 +54,5 @@ public class Particle<T extends Comparable<T>> {
 
     public double getUploadLevel() {
         return uploadLevel;
-    }
-
-    public void findBestDataOfAllParticles(List<T> listGlobalData) {
-        T max = listGlobalData.get(0);
-        for (T element: listGlobalData) {
-            if (element.compareTo(max) > 0) {
-                max = element;
-            }
-        }
-
-        this.globalData = max;
     }
 }
