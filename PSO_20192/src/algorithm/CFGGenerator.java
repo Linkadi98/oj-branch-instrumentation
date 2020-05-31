@@ -8,7 +8,7 @@ import java.util.*;
 public class CFGGenerator {
     private String className;
     private String rootPath = System.getProperty("user.dir");
-    private String projectDir = rootPath + "/PSO_20192/src";
+    private String projectDir = "./PSO_20192/src";
 
     private final String OJ_POSTFIX = ".oj";
     private final String PATH_POSTFIX = ".path";
