@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Triangle instantiates BranchInstrumentor {
+public class Triangle instantiates Example.BranchInstrumentor {
 
 	public Triangle() {
 		super();

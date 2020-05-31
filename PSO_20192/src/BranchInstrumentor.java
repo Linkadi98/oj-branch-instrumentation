@@ -1,4 +1,3 @@
-
 import openjava.mop.*;
 import openjava.ptree.*;
 
@@ -96,7 +95,7 @@ public class BranchInstrumentor extends OJClass {
 	}
 
 	/**
-	 * Adds method newTrace vào class đang được instrument
+	 * Add method newTrace vào class đang được instrument
 	 */
 	public void insertTraceCreator() {
 		try {
@@ -159,9 +158,6 @@ public class BranchInstrumentor extends OJClass {
 		pathFile.println();
 	}
 
-	
-
-	
 	/**
 	 * Return fullname của method hoặc constructor.
 	 */

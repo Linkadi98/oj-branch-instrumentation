@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="PSO_20192">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/PSO_20192/openjava.jar!/" />
+      <root url="jar://$PROJECT_DIR$/PSO_20192/junit.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

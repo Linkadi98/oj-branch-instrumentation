@@ -1,4 +1,3 @@
-
 import openjava.ptree.*;
 import openjava.ptree.util.*;
 
@@ -17,7 +16,7 @@ public class BranchTraceVisitor extends ParseTreeVisitor {
   BranchInstrumentor instrumentor;
 
   /**
-   * The backward link to the BranchInstrumentor class is used when trace
+   * The backward link to the Example.BranchInstrumentor class is used when trace
    * statements are being created.
    * 
    * <p>
@@ -218,6 +217,5 @@ public class BranchTraceVisitor extends ParseTreeVisitor {
     stmts.accept(this);
     controlDependences = initCtrlDep;
   }
-
 }
 
