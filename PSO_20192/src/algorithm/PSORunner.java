@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Set;
 
-public class PSORunner<T> {
+public class PSORunner {
     List<Particle> particles;
     Set targetPath;
     Class testClass;

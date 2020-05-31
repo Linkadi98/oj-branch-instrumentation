@@ -9,7 +9,6 @@ public class Particle<T extends Comparable<T>> {
      * data có thể coi là position của particle
      */
     private T data;
-    private double velocity;
 
     /**
      * uploadLevel cho chúng ta biết data của particle này sẽ bao phủ đến đâu target path
@@ -25,11 +24,9 @@ public class Particle<T extends Comparable<T>> {
      */
     private T globalData;
 
-    public Particle(T data, double initVelocity, double initUploadLevel, int position) {
+    public Particle(T data, double initUploadLevel) {
         this.data = data;
-        this.velocity = initVelocity;
         this.uploadLevel = initUploadLevel;
-//        this.position = position;
     }
 
     public T getData() {
