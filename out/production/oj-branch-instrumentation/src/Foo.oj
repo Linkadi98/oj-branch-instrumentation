@@ -1,0 +1,14 @@
+public class Foo instantiates BranchInstrumentor {
+    void printSomething(int a) {
+
+        if (a < 3) {
+            System.out.println("xxx");
+        } else if (a > 4) {
+            System.out.println("yyy");
+        } else if (a==3) {
+            System.out.println("zzz");
+        } else {
+            System.out.println("ttt");
+        }
+    }
+}

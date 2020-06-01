@@ -30,7 +30,7 @@ public class CFGGenerator {
         openjava.ojc.Main.main(sources);
     }
 
-    public List<Set> getCFGAsArray() {
+    public List<Set<Integer>> getCFGAsArray() {
         readPaths();
         return getBranchSetFromPaths();
     }
@@ -92,17 +92,18 @@ public class CFGGenerator {
      *
      * @return
      */
-    private List<Set> getBranchSetFromPaths() {
+    private List<Set<Integer>> getBranchSetFromPaths() {
         List valuePaths = new LinkedList();
         valuePaths.addAll(paths.values());
         List keyPaths = new LinkedList();
         keyPaths.addAll(paths.keySet());
 
-        List<Set> newSet = new LinkedList<>();
+        List<Set<Integer>> newSet = new LinkedList<>();
         for (int i = 0; i < valuePaths.size(); i++) {
             Set<Integer> temp = new HashSet<>();
             if (valuePaths.get(i).toString().equals("[]")) {
-                temp.add((int) valuePaths.get(i));
+                List<Integer> value = (List<Integer>) valuePaths.get(i);
+                temp.addAll(value);
             } else {
                 List<Integer> integers = (List<Integer>) valuePaths.get(i);
                 temp.addAll(integers);

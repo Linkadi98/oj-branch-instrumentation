@@ -3,14 +3,12 @@ package algorithm;
 import java.lang.invoke.MethodHandle;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.net.Inet4Address;
+import java.util.*;
 
 public class PSORunner<T> {
     private List<Particle<T>> particles;
-    private List<Set> targetPaths;
+    private List<Set<Integer>> targetPaths;
     private Class testClass;
     private String testableMethod;
     private CFGGenerator generator;
@@ -19,8 +17,8 @@ public class PSORunner<T> {
         this.particles = particles;
     }
 
-    public void setTestClass(Class testClass) {
-        this.testClass = testClass;
+    public void setTestClass(String testClassName) throws ClassNotFoundException {
+        this.testClass = Class.forName(testClassName);
         this.generator = new CFGGenerator(testClass.getName());
         this.targetPaths = generator.getCFGAsArray();
     }
@@ -29,8 +27,45 @@ public class PSORunner<T> {
         return particles;
     }
 
-    public List<Set> getTargetPaths() {
+    public List<Set<Integer>> getTargetPaths() {
         return targetPaths;
+    }
+
+    public Class getTestClass() {
+        return testClass;
+    }
+
+    public List<Object> getAllGetterValueMethodFrom(Class dataClass, Object instanceObject) {
+        List<Object> objects = new ArrayList<>();
+        Method[] methods = dataClass.getMethods();
+
+        for(Method method: methods) {
+            if (isGetter(method)) {
+                try {
+                    objects.add(method.invoke(instanceObject, null));
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        return objects;
+    }
+
+    public static boolean isGetter(Method method){
+        if(!method.getName().startsWith("get"))
+            return false;
+        if(method.getParameterTypes().length != 0)
+            return false;
+        if(void.class.equals(method.getReturnType()))
+            return false;
+        if (method.getName().equals("getClass")) {
+            return false;
+        }
+        return true;
     }
 
     public Method getMethodInClass(String methodName, Class<?>... parameterTypes) {
@@ -103,5 +138,6 @@ public class PSORunner<T> {
         }
     }
 
-
+    public static void main(String[] args) throws ClassNotFoundException {
+    }
 }
