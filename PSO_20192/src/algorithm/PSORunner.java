@@ -8,12 +8,11 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 public class PSORunner<T> {
-    private List<Particle<T>> particles;
+    private final List<Particle<T>> particles;
     private List<Set<Integer>> targetPaths;
     private Class testClass;
     private String testableMethod;
-    private CFGGenerator generator;
-    private ArrayList testData = new ArrayList<String>();
+    private final ArrayList testData = new ArrayList<String>();
 
     public PSORunner(List<Particle<T>> particles) {
         this.particles = particles;
@@ -21,23 +20,15 @@ public class PSORunner<T> {
 
     public void setTestClass(String testClassName) throws ClassNotFoundException {
         this.testClass = Class.forName(testClassName);
-        this.generator = new CFGGenerator(testClass.getName());
+        CFGGenerator generator = new CFGGenerator(testClass.getName());
         this.targetPaths = generator.getCFGAsArray();
     }
 
-    public List<Particle<T>> getParticles() {
-        return particles;
-    }
-
-    public List<Set<Integer>> getTargetPaths() {
+    private List<Set<Integer>> getTargetPaths() {
         return targetPaths;
     }
 
-    public Class getTestClass() {
-        return testClass;
-    }
-
-    public List<Object> getAllGetterValueMethodFrom(Class dataClass, Object instanceObject) {
+    private List<Object> getAllGetterValueMethodFrom(Class dataClass, Object instanceObject) {
         List<Object> objects = new ArrayList<>();
         Method[] methods = dataClass.getMethods();
 
@@ -45,9 +36,7 @@ public class PSORunner<T> {
             if (isGetter(method)) {
                 try {
                     objects.add(method.invoke(instanceObject, null));
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
+                } catch (IllegalAccessException | InvocationTargetException e) {
                     e.printStackTrace();
                 }
             }
@@ -57,17 +46,14 @@ public class PSORunner<T> {
         return objects;
     }
 
-    public static boolean isGetter(Method method){
+    private static boolean isGetter(Method method){
         if(!method.getName().startsWith("get"))
             return false;
         if(method.getParameterTypes().length != 0)
             return false;
         if(void.class.equals(method.getReturnType()))
             return false;
-        if (method.getName().equals("getClass")) {
-            return false;
-        }
-        return true;
+        return !method.getName().equals("getClass");
     }
 
     public Method getMethodInClass(String methodName, Class<?>... parameterTypes) {
@@ -82,19 +68,17 @@ public class PSORunner<T> {
         return method;
     }
 
-    public void run(Method method, Object instanceObject, Object... params) {
+    private void run(Method method, Object instanceObject, Object... params) {
         method.setAccessible(true);
         try {
             method.invoke(instanceObject, params);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
     }
 
-    public Set getExecutionPath() {
-        Method getTraceMethod = null;
+    private Set getExecutionPath() {
+        Method getTraceMethod;
         Set executionPath = new HashSet();
         try {
             getTraceMethod = testClass.getDeclaredMethod("getTrace", null);
@@ -102,34 +86,22 @@ public class PSORunner<T> {
             if (path instanceof Set) {
                 executionPath = (Set) path;
             }
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
 
         return executionPath;
     }
 
-    public void newTrace() {
+    private void newTrace() {
         try {
             testClass.getDeclaredMethod("newTrace", null).invoke(null, null);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
     }
 
-    public void renderData(List <Particle> particles) {
-
-    }
-
-    public void runPSO(Method method,T instanceObject) {
+    public void runPSO(Method method, T instanceObject) {
         List<Set<Integer>> targetPaths = getTargetPaths();
         for (Set<Integer> targetPath : targetPaths) {
             if (targetPath.size() == 0)
@@ -162,8 +134,5 @@ public class PSORunner<T> {
             testData.add(new Gson().toJson(gBest));
         }
         System.out.println("TEST DATA: " + testData);
-    }
-
-    public static void main(String[] args) throws ClassNotFoundException {
     }
 }
