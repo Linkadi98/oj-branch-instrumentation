@@ -1,9 +1,10 @@
 package algorithm;
 
-import java.lang.invoke.MethodHandle;
+import com.google.gson.Gson;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.Inet4Address;
+
 import java.util.*;
 
 public class PSORunner<T> {
@@ -12,6 +13,7 @@ public class PSORunner<T> {
     private Class testClass;
     private String testableMethod;
     private CFGGenerator generator;
+    private ArrayList testData = new ArrayList<String>();
 
     public PSORunner(List<Particle<T>> particles) {
         this.particles = particles;
@@ -127,15 +129,39 @@ public class PSORunner<T> {
 
     }
 
-    public void runPSO(Method method, Object instanceObject, Object... params) {
-        newTrace();
-        try {
-            method.invoke(instanceObject, params);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+    public void runPSO(Method method,T instanceObject) {
+        List<Set<Integer>> targetPaths = getTargetPaths();
+        for (Set<Integer> targetPath : targetPaths) {
+            if (targetPath.size() == 0)
+                continue;
+            Object gBest = new Object();
+            double uploadLevelMax = 0.0;
+            System.out.println("Target path: " + targetPath);
+            for (Particle<T> particle : particles) {
+                newTrace();
+                Class dataClass = particle.getData().getClass();
+                List<Object> listObjects = getAllGetterValueMethodFrom(dataClass, particle.getData());
+                run(method, instanceObject, listObjects.toArray(new Object[listObjects.size()]));
+                getExecutionPath();
+                double uploadLevel = particle.calculateUploadLevel(getExecutionPath(), targetPath);
+                particle.setUploadLevel(uploadLevel);
+
+                Gson gson = new Gson();
+                String stringData = gson.toJson(particle.getData());
+                System.out.println("Particle: " + stringData + " - upload level: " + uploadLevel);
+                if (particle.getUploadLevel() > uploadLevelMax){
+                    uploadLevelMax = particle.getUploadLevel();
+                    gBest = particle.getData();
+                    if (uploadLevelMax == 1.0) {
+                        break;
+                    }
+                }
+                System.out.println("G BEST: " + gBest + "--- Upload MAX : " + uploadLevelMax);
+
+            }
+            testData.add(new Gson().toJson(gBest));
         }
+        System.out.println("TEST DATA: " + testData);
     }
 
     public static void main(String[] args) throws ClassNotFoundException {

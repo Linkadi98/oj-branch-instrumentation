@@ -29,9 +29,9 @@ public class Main {
      */
     public static void main(String[] args) throws InterruptedException, ClassNotFoundException {
 
-//		CFGGenerator generator = new CFGGenerator(input);
+//		CFGGenerator generator = new CFGGenerator("Foo");
 //		generator.generateNecessaryFilesToUseToAnalysis();
-//
+////
 //		Random random = new Random();
 //		List<Particle<DataStructment>> particalInit = new LinkedList<>();
 //
@@ -74,39 +74,38 @@ public class Main {
 //
 //		}
 //		System.out.println("TEST DATA: " + testData);
-        // init particle
-        Random random = new Random();
-        List<Particle<TriangleData>> particles = new ArrayList<>();
+        // need to explicit Type of particle
+        //init particle
+//        Random random = new Random();
+//        List<Particle<TriangleData>> particles = new ArrayList<>();
+//
+//        for (int i = 0; i < 1000; i++) {
+//            Particle<TriangleData> particle = new Particle(new TriangleData(random), 0);
+//
+//            particles.add(particle);
+//
+//        }
+//        PSORunner runner = new PSORunner(particles);
+//        runner.setTestClass("Triangle");
+//        Method method = runner.getMethodInClass("checkTriangle", int.class, int.class, int.class);
+//
+//        // pass instance object if invoking an instance method else instance method is null
+//        runner.runPSO(method, null);
 
-        for (int i = 0; i < 10; i++) {
-            Particle<TriangleData> particle = new Particle(new TriangleData(random), 0);
+        Random random = new Random();
+        List<Particle<FooData>> particles = new ArrayList<>();
+
+        for (int i = 0; i < 1000; i++) {
+            Particle<FooData> particle = new Particle(new FooData(random), 0);
 
             particles.add(particle);
-
         }
+
         PSORunner runner = new PSORunner(particles);
-        runner.setTestClass("Triangle");
-        Method method = runner.getMethodInClass("checkTriangle", int.class, int.class, int.class);
+        runner.setTestClass("Foo");
 
-        List<Set<Integer>> targetPaths = runner.getTargetPaths();
-        for (Set<Integer> targetPath : targetPaths) {
-            if (targetPath.size() == 0)
-                continue;
-            System.out.println("Target path: " + targetPath);
-            runner.newTrace();
-            for (Particle<TriangleData> particle : particles) {
-                Class dataClass = particle.getData().getClass();
-                List<Object> listObjects = runner.getAllGetterValueMethodFrom(dataClass, particle.getData());
-                runner.run(method, null, listObjects.toArray(new Object[listObjects.size()]));
-                runner.getExecutionPath();
-                double uploadLevel = particle.calculateUploadLevel(runner.getExecutionPath(), targetPath);
-                particle.setUploadLevel(uploadLevel);
+        Method method = runner.getMethodInClass("printSomething", int.class);
 
-                Gson gson = new Gson();
-				String stringData = gson.toJson(particle.getData());
-				System.out.println("Particle: " + stringData + " - upload level: " + uploadLevel);
-			}
-
-        }
+        runner.runPSO(method, new Foo());
     }
 }

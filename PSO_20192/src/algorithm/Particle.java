@@ -32,15 +32,26 @@ public class Particle<T> {
     }
 
     public double calculateUploadLevel(Set executionPath, Set targetPath) {
+        List<Integer> targetPathArray = new ArrayList<>(targetPath);
+        List<Integer> executionPathArray = new ArrayList<>(executionPath);
         List<Integer> executionNodesInTargetPath = new ArrayList<>();
-        Iterator<Integer> it = executionPath.iterator();
+//        Iterator<Integer> it = executionPath.iterator();
         System.out.println("Execution path: " + executionPath);
-        while (it.hasNext()) {
-            int node = it.next();
-            if (targetPath.contains(node)) {
-                executionNodesInTargetPath.add(node);
+        int targetPathSize = targetPath.size();
+        for (int i = 0; i < targetPathSize; i++) {
+            if (targetPathArray.get(i).equals(executionPathArray.get(i))) {
+                executionNodesInTargetPath.add(executionPathArray.get(i));
+            } else {
+                break;
             }
         }
+
+//        while (it.hasNext()) {
+//            int node = it.next();
+//            if (targetPath.contains(node)) {
+//                executionNodesInTargetPath.add(node);
+//            }
+//        }
         return (double) executionNodesInTargetPath.size() / targetPath.size();
     }
 

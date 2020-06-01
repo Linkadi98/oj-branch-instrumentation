@@ -1,5 +1,5 @@
 public class Foo instantiates BranchInstrumentor {
-    void printSomething(int a) {
+    private void printSomething(int a) {
 
         if (a < 3) {
             System.out.println("xxx");
