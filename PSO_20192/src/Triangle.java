@@ -7,33 +7,41 @@ import java.util.*;
 public class Triangle
 {
 
+    private int a;
+
     public Triangle()
     {
         super();
         trace.add( new java.lang.Integer( 1 ) );
     }
 
-    public static java.lang.String checkTriangle( int side1, int side2, int side3 )
+    public Triangle( int a )
     {
         trace.add( new java.lang.Integer( 2 ) );
+        this.a = a;
+    }
+
+    public static java.lang.String checkTriangle( int side1, int side2, int side3 )
+    {
+        trace.add( new java.lang.Integer( 3 ) );
         java.lang.String type = "";
         if (side1 + side2 > side3 && side3 + side2 > side1 && side1 + side3 > side2) {
-            trace.add( new java.lang.Integer( 3 ) );
+            trace.add( new java.lang.Integer( 4 ) );
             if (side1 != side2 && side1 != side3 && side2 != side3) {
-                trace.add( new java.lang.Integer( 4 ) );
+                trace.add( new java.lang.Integer( 5 ) );
                 type = "Is triangle scalene";
             } else {
-                trace.add( new java.lang.Integer( 5 ) );
+                trace.add( new java.lang.Integer( 6 ) );
                 if (side1 == side2 && side1 != side3 || side1 == side3 && side1 != side2 || side2 == side3 && side2 != side1) {
-                    trace.add( new java.lang.Integer( 6 ) );
+                    trace.add( new java.lang.Integer( 7 ) );
                     type = "Is triangle isosceles ";
                 } else {
-                    trace.add( new java.lang.Integer( 7 ) );
+                    trace.add( new java.lang.Integer( 8 ) );
                     type = "Is triangle equilateral ";
                 }
             }
         } else {
-            trace.add( new java.lang.Integer( 8 ) );
+            trace.add( new java.lang.Integer( 9 ) );
             type = "Not a triangle";
         }
         return type;

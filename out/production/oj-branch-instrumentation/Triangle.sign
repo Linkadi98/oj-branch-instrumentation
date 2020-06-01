@@ -1,2 +1,3 @@
 Triangle.Triangle()
+Triangle.Triangle(int)
 Triangle.checkTriangle(int,int,int)

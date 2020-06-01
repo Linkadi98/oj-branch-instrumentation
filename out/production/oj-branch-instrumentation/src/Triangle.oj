@@ -2,9 +2,16 @@ import java.util.*;
 
 public class Triangle instantiates BranchInstrumentor{
 
+    private int a;
+
 	public Triangle() {
 		super();
 	}
+
+	public Triangle(int a) {
+	    this.a = a;
+	}
+
 	public static String checkTriangle(int side1, int side2, int side3) {
 		String type = "";
 		if ((side1 + side2 > side3) && (side3 + side2 > side1) && (side1 + side3 > side2)) {

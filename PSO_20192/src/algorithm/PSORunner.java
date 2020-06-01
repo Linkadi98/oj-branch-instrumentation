@@ -121,15 +121,14 @@ public class PSORunner<T> {
                 Gson gson = new Gson();
                 String stringData = gson.toJson(particle.getData());
                 System.out.println("Particle: " + stringData + " - upload level: " + uploadLevel);
-                if (particle.getUploadLevel() > uploadLevelMax){
+                if (particle.getUploadLevel() > uploadLevelMax) {
                     uploadLevelMax = particle.getUploadLevel();
                     gBest = particle.getData();
                     if (uploadLevelMax == 1.0) {
                         break;
                     }
                 }
-                System.out.println("G BEST: " + gBest + "--- Upload MAX : " + uploadLevelMax);
-
+                System.out.println("G BEST: " + gBest + " --- Upload MAX : " + uploadLevelMax);
             }
             testData.add(new Gson().toJson(gBest));
         }
