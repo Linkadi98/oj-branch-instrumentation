@@ -14,14 +14,29 @@ public class PSORunner<T> {
     private String testableMethod;
     private final ArrayList testData = new ArrayList<String>();
 
-    public PSORunner(List<Particle<T>> particles) {
+    public PSORunner(List<Particle<T>> particles, String testClass) {
         this.particles = particles;
+
+        try {
+            setTestClass(testClass);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setTestClass(String testClassName) throws ClassNotFoundException {
         this.testClass = Class.forName(testClassName);
         CFGGenerator generator = new CFGGenerator(testClass.getName());
         this.targetPaths = generator.getCFGAsArray();
+    }
+
+    public void initParticle(int max) {
+
+    }
+
+    public void findTestDataFor(String methodName, T instanceTestClass,  Class<?>... parameterTypes) {
+        Method method = getMethodInClass(methodName, parameterTypes);
+        runPSO(method, instanceTestClass);
     }
 
     private List<Set<Integer>> getTargetPaths() {
@@ -114,7 +129,7 @@ public class PSORunner<T> {
                 Class dataClass = particle.getData().getClass();
                 List<Object> listObjects = getAllGetterValueMethodFrom(dataClass, particle.getData());
                 run(method, instanceObject, listObjects.toArray(new Object[listObjects.size()]));
-                getExecutionPath();
+//                getExecutionPath();
                 double uploadLevel = particle.calculateUploadLevel(getExecutionPath(), targetPath);
                 particle.setUploadLevel(uploadLevel);
 

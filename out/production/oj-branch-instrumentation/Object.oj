@@ -1,0 +1,17 @@
+
+public class ObjectExample instantiates BranchInstrumentor {
+
+    public void objectMethod(FooData data) {
+        int a = data.getA();
+        int b = 0;
+        if (a < 1) {
+            b++;
+        } else if (a > 3) {
+            b--;
+        } else if (a > 7 && a < 10) {
+            b = b + 10;
+        } else {
+            b = b + 11;
+        }
+    }
+}

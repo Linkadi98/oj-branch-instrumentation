@@ -29,7 +29,7 @@ public class Main {
      */
     public static void main(String[] args) throws InterruptedException, ClassNotFoundException {
 
-//		CFGGenerator generator = new CFGGenerator("Triangle");
+//		CFGGenerator generator = new CFGGenerator("Object");
 //		generator.generateNecessaryFilesToUseToAnalysis();
 ////
 //		Random random = new Random();
@@ -76,35 +76,48 @@ public class Main {
 //		System.out.println("TEST DATA: " + testData);
         // need to explicit Type of particle
         //init particle
-        Random random = new Random();
-        List<Particle<TriangleData>> particles = new ArrayList<>();
-
-        for (int i = 0; i < 1000; i++) {
-            Particle<TriangleData> particle = new Particle(new TriangleData(random), 0);
-
-            particles.add(particle);
-
-        }
-        PSORunner runner = new PSORunner(particles);
-        runner.setTestClass("Triangle");
-        Method method = runner.getMethodInClass("checkTriangle", int.class, int.class, int.class);
-
-        // pass instance object if invoking an instance method else instance method is null
-        runner.runPSO(method, null);
-
 //        Random random = new Random();
-//        List<Particle<FooData>> particles = new ArrayList<>();
+//        List<Particle<TriangleData>> particles = new ArrayList<>();
 //
 //        for (int i = 0; i < 1000; i++) {
-//            Particle<FooData> particle = new Particle(new FooData(random), 0);
+//            Particle<TriangleData> particle = new Particle(new TriangleData(random), 0);
+//
+//            particles.add(particle);
+//
+//        }
+//        PSORunner runner = new PSORunner(particles);
+//        runner.setTestClass("Triangle");
+//        Method method = runner.getMethodInClass("checkTriangle", int.class, int.class, int.class);
+//
+//        // pass instance object if invoking an instance method else instance method is null
+//        runner.runPSO(method, null);
+
+        Random random = new Random();
+        List<Particle<FooData>> particles = new ArrayList<>();
+
+        for (int i = 0; i < 1000; i++) {
+            Particle<FooData> particle = new Particle(new FooData(random), 0);
+            particles.add(particle);
+        }
+
+        PSORunner runner = new PSORunner(particles, "Foo");
+        runner.findTestDataFor("printSomething", new Foo(), int.class);
+
+//        Random random = new Random();
+//        List<Particle<ObjectData>> particles = new ArrayList<>();
+//
+//        for (int i = 0; i < 1000; i++) {
+//            Particle<ObjectData> particle = new Particle(new ObjectData(), 0);
 //            particles.add(particle);
 //        }
 //
-//        PSORunner runner = new PSORunner(particles);
-//        runner.setTestClass("Foo");
+//        PSORunner runner = new PSORunner(particles, "ObjectExample");
+////        runner.setTestClass("ObjectExample");
+////
+////        Method method = runner.getMethodInClass("objectMethod", FooData.class);
+////
+////        runner.runPSO(method, new ObjectExample());
 //
-//        Method method = runner.getMethodInClass("printSomething", int.class);
-//
-//        runner.runPSO(method, new Foo());
+//        runner.findTestDataFor("objectMethod", new ObjectExample(), FooData.class);
     }
 }
